@@ -15,7 +15,7 @@ export async function GET() {
       return NextResponse.json({ complaints: [] });
     }
 
-    const allComplaints = await db
+    let allComplaints = await db
       .select({
         id: complaints.id,
         title: complaints.title,
