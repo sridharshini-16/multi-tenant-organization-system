@@ -21,6 +21,7 @@ export async function GET() {
         title: complaints.title,
         description: complaints.description,
         status: complaints.status,
+        targetRole: complaints.targetRole,
         isAnonymous: complaints.isAnonymous,
         response: complaints.response,
         respondedAt: complaints.respondedAt,
@@ -35,12 +36,17 @@ export async function GET() {
       .where(eq(complaints.organizationId, currentUser.organizationId))
       .orderBy(desc(complaints.createdAt));
 
-    // Members can only see their own complaints
     if (currentUser.role === "member") {
-      const filtered = allComplaints.filter(
+      let filtered = allComplaints.filter(
         (c) => c.submittedById === currentUser.userId
       );
       return NextResponse.json({ complaints: filtered });
+    }
+
+    if (currentUser.role === "admin") {
+      allComplaints = allComplaints.filter((c) => c.targetRole === "admin");
+    } else if (currentUser.role === "organization") {
+      allComplaints = allComplaints.filter((c) => c.targetRole === "organization");
     }
 
     // Hide anonymous submitter names for org/admin viewing
@@ -75,7 +81,7 @@ export async function POST(req) {
     }
 
     const body = await req.json();
-    const { title, description, isAnonymous } = body;
+    const { title, description, targetRole, isAnonymous } = body;
 
     if (!title || !description) {
       return NextResponse.json(
@@ -84,11 +90,14 @@ export async function POST(req) {
       );
     }
 
+    const validatedTarget = ["admin", "organization"].includes(targetRole) ? targetRole : "organization";
+
     const [complaint] = await db
       .insert(complaints)
       .values({
         title,
         description,
+        targetRole: validatedTarget,
         organizationId: currentUser.organizationId,
         submittedById: currentUser.userId,
         isAnonymous: isAnonymous || false,

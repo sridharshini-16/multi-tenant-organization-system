@@ -114,6 +114,7 @@ CREATE TABLE IF NOT EXISTS complaints (
   response TEXT,
   responded_by_id UUID REFERENCES users(id) ON DELETE SET NULL,
   responded_at TIMESTAMP,
+  target_role TEXT DEFAULT 'organization' NOT NULL,
   is_anonymous BOOLEAN DEFAULT false NOT NULL,
   created_at TIMESTAMP DEFAULT NOW() NOT NULL,
   updated_at TIMESTAMP DEFAULT NOW() NOT NULL

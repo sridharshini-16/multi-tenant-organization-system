@@ -150,6 +150,7 @@ export const complaints = pgTable("complaints", {
     onDelete: "set null",
   }),
   respondedAt: timestamp("responded_at"),
+  targetRole: text("target_role").notNull().default("organization"),
   isAnonymous: boolean("is_anonymous").default(false).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),

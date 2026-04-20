@@ -9,17 +9,20 @@ const navItems = {
     { href: "/dashboard/tasks", label: "Tasks", icon: "✅" },
     { href: "/dashboard/events", label: "Events", icon: "📅" },
     { href: "/dashboard/members", label: "Members", icon: "👥" },
+    { href: "/dashboard/complaints", label: "Complaints", icon: "⚠️" },
   ],
   admin: [
     { href: "/dashboard", label: "Overview", icon: "📊" },
     { href: "/dashboard/tasks", label: "Tasks", icon: "✅" },
     { href: "/dashboard/events", label: "Events", icon: "📅" },
     { href: "/dashboard/members", label: "Members", icon: "👥" },
+    { href: "/dashboard/complaints", label: "Complaints", icon: "⚠️" },
   ],
   member: [
     { href: "/dashboard", label: "Overview", icon: "📊" },
     { href: "/dashboard/tasks", label: "My Tasks", icon: "✅" },
     { href: "/dashboard/events", label: "Events", icon: "📅" },
+    { href: "/dashboard/complaints", label: "Complaints", icon: "⚠️" },
   ],
 };
 
